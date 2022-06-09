@@ -10,6 +10,7 @@ export const FormularioRestaurante = () => {
     const parametros = useParams();
     const navigate = useNavigate();
 
+    //Essa parte é onde cria e edita um restaurante seguindo a mesma lógica dos pratos, ele utiliza o parâmetro para verificar se existe o restaurante e se não existir cria um novo e se existir ele só edita.
     const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault();
         if (parametros.id) {
@@ -32,6 +33,7 @@ export const FormularioRestaurante = () => {
 
     }
 
+    //Esse useEffect é para verificar se já existe o restaurante e se existir ele atualiza o estado com os dados do restaurante existente.
     useEffect(() => {
         if (parametros.id) {
             http.get(`restaurantes/${parametros.id}/`)

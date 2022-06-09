@@ -1,6 +1,7 @@
 import { AppBar, Container, Toolbar, Typography, Box, Button, Paper, Link } from "@mui/material"
 import { Link as RouterLink, Outlet } from "react-router-dom"
 
+//Esse componente é onde fica as partes que são comum entre todas as páginas administrativas e nas rotas é renderizado somente a página em si que é alterada que aqui seria onde está o componente Outlet
 export const PaginaBaseAdmin = () => {
     return (
         <>
@@ -18,7 +19,7 @@ export const PaginaBaseAdmin = () => {
                             </Link>
                             <Link component={RouterLink} to="/admin/restaurantes/novo">
                                 <Button sx={{ my: 2, color: 'white' }}>
-                                    Novo Restaurantes
+                                    Novo Restaurante
                                 </Button>
                             </Link>
                             <Link component={RouterLink} to="/admin/pratos">
@@ -29,6 +30,11 @@ export const PaginaBaseAdmin = () => {
                             <Link component={RouterLink} to="/admin/pratos/novo">
                                 <Button sx={{ my: 2, color: 'white' }}>
                                     Novo Prato
+                                </Button>
+                            </Link>
+                            <Link component={RouterLink} to="/" sx={{ml: 'auto'}}>
+                                <Button sx={{ my: 2, color: 'white', background: '#0361b9'}}>
+                                    Voltar ao site
                                 </Button>
                             </Link>
                         </Box>

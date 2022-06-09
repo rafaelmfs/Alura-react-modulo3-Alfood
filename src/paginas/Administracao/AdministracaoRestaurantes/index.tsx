@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { http } from "../../../http";
 import IRestaurante from "../../../interfaces/IRestaurante"
 
+//Esse componente é onde renderiza uma lista de restaurantes e o usuário pode criar, editar e excluir.
 export const AdministracaoRestaurantes = () => {
 
     const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([]);
 
+    //Para excluir foi utilizado o método HTTP DELETE e passado por parametro o id do restaurante a ser excluido e atualizado a lista de restaurantes.
     const excluir = (restauranteExcluido: IRestaurante) =>{
         http.delete(`restaurantes/${restauranteExcluido.id}/`)
             .then(() => {
@@ -18,6 +20,7 @@ export const AdministracaoRestaurantes = () => {
 
     }
 
+    //Aqui é onde faz o GET da lista de restaurantes e atualiza o estado.
     useEffect(() => {
         http.get<IRestaurante[]>("restaurantes/")
             .then(resposta => setRestaurantes(resposta.data))

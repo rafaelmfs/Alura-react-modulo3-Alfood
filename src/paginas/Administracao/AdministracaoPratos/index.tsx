@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import { http } from "../../../http";
 import IPrato from "../../../interfaces/IPrato";
 
+//Esse componente é onde renderiza a lista de pratos para editar, cadastrar ou excluir. No caso de cadastrar ou editar ele já redireciona para o formulário.
+
 export const AdministracaoPratos = () => {
 
     const [pratos, setPratos] = useState<IPrato[]>([]);
 
+    //Para excluir é chamado o método HTTP DELETE e enviado o ID do prato, logo após atualizado a lista de pratos.
     const excluir = (pratoExcluido: IPrato) =>{
         http.delete(`pratos/${pratoExcluido.id}/`)
             .then(() => {
@@ -18,6 +21,7 @@ export const AdministracaoPratos = () => {
 
     }
 
+    //Esse useEffect é para fazer o GET da lista de pratos e exibir.
     useEffect(() => {
         http.get<IPrato[]>("pratos/")
             .then(resposta => setPratos(resposta.data))

@@ -23,6 +23,7 @@ export const FormularioPrato = () => {
     const navigate = useNavigate();
     const parametros = useParams();
 
+    //Esse é o formulário para adicionar ou editar um prato, aqui é utilizado o parametro para saber se vai ser um novo prato ou se ele já existe pelo ID, se não existe é um novo e se existe então ele busca as informações daquele prato para editar.
     const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault();
 
@@ -32,10 +33,12 @@ export const FormularioPrato = () => {
         formData.append('tag', tag);
         formData.append('restaurante', restaurante);
 
+        //O usuário tem a opção de anexar uma imagem também mas é opcional
         if (imagem) {
             formData.append('imagem', imagem);
         }
-        if(parametros.id){
+        //Aqui valida se já existe o ID e se existe então o prato é atualizado, se não existe é um novo prato.
+        if (parametros.id) {
             http.request({
                 url: `pratos/${parametros.id}/`,
                 method: 'PUT',
@@ -50,7 +53,7 @@ export const FormularioPrato = () => {
                 })
                 .catch(erro => console.error(erro));
 
-        }else{
+        } else {
             http.request({
                 url: 'pratos/',
                 method: 'POST',
@@ -82,11 +85,15 @@ export const FormularioPrato = () => {
     }
 
     useEffect(() => {
+        //Aqui é feito uma busca na API pelas TAGS e pelos restaurantes e então atualizado os dados nas variavéis de estado.
         http.get<{ tags: ITag[] }>('tags/')
             .then(resposta => setTags(resposta.data.tags));
         http.get<IRestaurante[]>('restaurantes/')
             .then(resposta => setRestaurantes(resposta.data));
+    }, [])
 
+    useEffect(() => {
+        //Validado se existe aquele prato e se existir já busca as informações dele na api e atualiza o estado.
         if (parametros.id) {
             http.get<IPrato>(`/pratos/${parametros.id}/`)
                 .then(resposta => {
@@ -96,7 +103,7 @@ export const FormularioPrato = () => {
                     setRestaurante(String(resposta.data.restaurante));
                 })
         }
-    }, [])
+    }, [parametros.id]);
 
 
     return (
